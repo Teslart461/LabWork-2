@@ -38,7 +38,7 @@ typedef struct {
 
 // Структура для меню
 typedef struct {
-    Meal maels[5];  
+    Meal meals[5];  
     int num_meals;          
 } Menu;
 
