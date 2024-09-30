@@ -47,4 +47,9 @@ typedef struct {
     char name[50];                
 } User;
 
+// Структура для учета физической активности
+typedef struct {
+    double calories_burned;               
+} PhysicalActivity;
+
 #endif // MYSTRUCTS_H
