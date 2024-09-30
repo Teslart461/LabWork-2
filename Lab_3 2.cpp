@@ -11,7 +11,7 @@ double calculate_cal(DetailedIngredient ingredient) {
 }
 
 // Функция для подсчета калорий блюда
-double calculate_dish_calories(Dish *dish) {
+double calculate_dish_calories(Dish* dish) {
     double dish_cal = 0;
     for (int i = 0; i < dish->num_ingredients; i++) {
         dish_cal += calculate_cal(dish->ingredients[i]);
@@ -37,33 +37,7 @@ double calculate_menu_calories(Menu* menu) {
     return menu_cal;
 }
 
-void generate_report(User* user, Menu* menu) {
-    printf("Отчет о калориях для пользователя: %s\n", user->name);
-    printf("-------------------------------------------------\n");
-
-    // Проходим по каждому приему пищи
-    for (int i = 0; i < menu->num_meals; i++) {
-        Meal* meal = &menu->meals[i];
-        double meal_cal = calculate_meal_calories(meal);  // Используем функцию для подсчета калорий приема пищи
-
-        printf("Прием пищи: %s\n", meal->name);
-        printf("Калорийность приема пищи: %.2f калорий\n", meal_cal);
-
-        // Проходим по каждому блюду в приеме пищи
-        for (int j = 0; j < meal->num_dishes; j++) {
-            Dish* dish = &meal->dishes[j];
-            double dish_cal = calculate_dish_calories(dish);  // Используем функцию для подсчета калорий блюда
-
-            printf("  Блюдо: %s, Калорийность: %.2f калорий\n", dish->name, dish_cal);
-        }
-        printf("-------------------------------------------------\n");
-    }
-
-    // Подсчитываем и выводим общую калорийность всего меню
-    double total_calories = calculate_menu_calories(menu);  // Используем функцию для подсчета калорий меню
-    printf("Общие калории за весь день: %.2f калорий\n", total_calories);
-}
-
+// Функция для ввода информации об ингредиенте
 void input_ingredient(DetailedIngredient* ingredient) {
     printf("Введите название ингредиента: ");
     scanf("%s", ingredient->ingredient.name);
@@ -75,6 +49,7 @@ void input_ingredient(DetailedIngredient* ingredient) {
     scanf("%lf", &ingredient->ingredient.weight_in_grams);
 }
 
+// Функция для ввода информации о блюде
 void input_dish(Dish* dish) {
     printf("Введите название блюда: ");
     scanf("%s", dish->name);
@@ -88,6 +63,7 @@ void input_dish(Dish* dish) {
     }
 }
 
+// Функция для ввода информации о приёме пищи
 void input_meal(Meal* meal) {
     printf("Введите название приема пищи: ");
     scanf("%s", meal->name);
@@ -101,6 +77,7 @@ void input_meal(Meal* meal) {
     }
 }
 
+// Функция для ввода информации о меню (кол-ве приёмов пищи за условную единицу времени)
 void input_menu(Menu* menu) {
     printf("Введите количество приемов пищи в меню: ");
     scanf("%d", &menu->num_meals);
@@ -109,6 +86,42 @@ void input_menu(Menu* menu) {
         printf("Прием пищи %d:\n", i + 1);
         input_meal(&menu->meals[i]);
     }
+}
+
+// Функция для вывода информации о блюде
+void print_dish_info(Dish* dish) {
+    double dish_cal = calculate_dish_calories(dish);
+    printf("Блюдо: %s, Калорийность: %.2f калорий\n", dish->name, dish_cal);
+}
+
+// Функция для вывода информации о приеме пищи
+void print_meal_info(Meal* meal) {
+    double meal_cal = calculate_meal_calories(meal);
+    printf("Прием пищи: %s\n", meal->name);
+    printf("Калорийность приема пищи: %.2f калорий\n", meal_cal);
+
+    for (int j = 0; j < meal->num_dishes; j++) {
+        print_dish_info(&meal->dishes[j]);
+    }
+    printf("-------------------------------------------------\n");
+}
+
+// Функция для вывода общей калорийности меню
+void print_total_calories(Menu* menu) {
+    double total_calories = calculate_menu_calories(menu);
+    printf("Общие калории за весь день: %.2f калорий\n", total_calories);
+}
+
+// Основная функция для генерации отчета о потреблённых калориях
+void generate_report(User* user, Menu* menu) {
+    printf("\nОтчет о калориях для пользователя: %s\n", user->name);
+    printf("-------------------------------------------------\n");
+
+    for (int i = 0; i < menu->num_meals; i++) {
+        print_meal_info(&menu->meals[i]);
+    }
+
+    print_total_calories(menu);
 }
 
 int main() {
@@ -124,5 +137,4 @@ int main() {
     input_menu(&menu);
 
     generate_report(&user, &menu);
-
 }
