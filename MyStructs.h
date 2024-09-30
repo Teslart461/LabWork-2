@@ -47,11 +47,13 @@ typedef struct {
     char name[50];                
 } User;
 
-// Структура для вывода результата подсчета калорий
+// Структура для пользователя, который хочет узнать примерное количество калорий, которые ему необходимо потреблять
 typedef struct {
-    User user;                    
-    Menu menu;                    
-    double total_cal;          
-} CalReport;
+    char name[50];           
+    int age;                 
+    double weight;            
+    double height;
+    char gender;
+} DetailedUser;
 
 #endif // MYSTRUCTS_H
