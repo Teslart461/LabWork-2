@@ -47,13 +47,4 @@ typedef struct {
     char name[50];                
 } User;
 
-// Структура для пользователя, который хочет узнать примерное количество калорий, которые ему необходимо потреблять
-typedef struct {
-    char name[50];           
-    int age;                 
-    double weight;            
-    double height;
-    char gender;
-} DetailedUser;
-
 #endif // MYSTRUCTS_H
