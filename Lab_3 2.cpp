@@ -88,6 +88,12 @@ void input_menu(Menu* menu) {
     }
 }
 
+// Функция для ввода физической активности
+void input_physical_activity(PhysicalActivity* activity) {
+    printf("\nВведите количество сожженных калорий за физическую активность: ");
+    scanf("%lf", &activity->calories_burned);
+}
+
 // Функция для вывода информации о блюде
 void print_dish_info(Dish* dish) {
     double dish_cal = calculate_dish_calories(dish);
@@ -107,13 +113,17 @@ void print_meal_info(Meal* meal) {
 }
 
 // Функция для вывода общей калорийности меню
-void print_total_calories(Menu* menu) {
+void print_total_calories(Menu* menu, PhysicalActivity* activity) {
     double total_calories = calculate_menu_calories(menu);
+    double net_calories = total_calories - activity->calories_burned;  
+
     printf("Общие калории за весь день: %.2f калорий\n", total_calories);
+    printf("Сожженные калории за день: %.2f калорий\n", activity->calories_burned);
+    printf("Чистый калорийный баланс: %.2f калорий\n", net_calories);
 }
 
 // Основная функция для генерации отчета о потреблённых калориях
-void generate_report(User* user, Menu* menu) {
+void generate_report(User* user, Menu* menu, PhysicalActivity* activity) {
     printf("\nОтчет о калориях для пользователя: %s\n", user->name);
     printf("-------------------------------------------------\n");
 
@@ -121,7 +131,7 @@ void generate_report(User* user, Menu* menu) {
         print_meal_info(&menu->meals[i]);
     }
 
-    print_total_calories(menu);
+    print_total_calories(menu, activity);
 }
 
 int main() {
@@ -130,11 +140,14 @@ int main() {
 
     User user;
     Menu menu;
+    PhysicalActivity activity;
 
     printf("Введите имя пользователя: ");
     scanf("%s", user.name);
 
     input_menu(&menu);
 
-    generate_report(&user, &menu);
+    input_physical_activity(&activity);
+
+    generate_report(&user, &menu, &activity);
 }
