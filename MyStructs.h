@@ -74,3 +74,70 @@ public:
     double calculateCalories() const;
     void input();
 };
+
+// Класс для представления блюда     
+class Dish {
+private:
+    string name;
+    vector<DetailedIngredient> ingredients; // Создание контейнера, для хранения объектов типа DetailedIngredient
+
+public:
+    Dish() {
+        name = "";
+    }
+
+    ~Dish() {
+
+    }
+
+    string getName() const {
+        return name;
+    }
+
+    void addIngredient(const DetailedIngredient& ingredient);
+    double calculateCalories() const;
+    void input();
+};
+
+// Класс для приёма пищи (завтрак, обед, ужин и т.д.)           
+class Meal {
+private:
+    string name;
+    vector<Dish> dishes;
+
+public:
+    Meal() {
+        name = "";
+    }
+
+    ~Meal() {
+
+    }
+
+    string getName() const {
+        return name;
+    }
+
+    void addDish(const Dish& dish);
+    double calculateCalories() const;
+    void input();
+};
+
+// Класс для меню        
+class Menu {
+private:
+    vector<Meal> meals;
+
+public:
+    Menu() {
+
+    }
+
+    ~Menu() {
+
+    }
+
+    void addMeal(const Meal& meal);
+    double calculateCalories() const;
+    void input();
+};
