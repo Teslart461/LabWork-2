@@ -141,3 +141,47 @@ public:
     double calculateCalories() const;
     void input();
 };
+
+// Класс для представления пользователя               
+class User {
+private:
+    string name;
+
+public:
+    User() {
+        name = "";
+    }
+
+    ~User() {
+
+    }
+
+    string getName() const {
+        return name;
+    }
+
+    void input();
+};
+
+// Класс для учета физической активности              
+class PhysicalActivity {
+private:
+    double calories_burned;
+
+public:
+    PhysicalActivity() {
+        calories_burned = 0;
+    }
+
+    ~PhysicalActivity() {
+
+    }
+
+    double getCaloriesBurned() const {
+        return calories_burned;
+    }
+
+    void input();
+};
+
+#endif // MYSTRUCTS_H
