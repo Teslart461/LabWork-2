@@ -31,3 +31,93 @@ double DetailedIngredient::calculateCalories() const {
 void DetailedIngredient::input() {
     ingredient.input();
 }
+
+void Dish::addIngredient(const DetailedIngredient& ingredient) {
+    ingredients.push_back(ingredient);
+}
+
+double Dish::calculateCalories() const {
+    double total_cal = 0;
+    for (const auto& ingredient : ingredients) {
+        total_cal += ingredient.calculateCalories();
+    }
+    return total_cal;
+}
+
+void Dish::input() {
+    cout << "Введите название блюда: ";
+    cin >> name;
+    int numIngredients;
+    cout << "Введите количество ингредиентов в блюде: ";
+    while (!(cin >> numIngredients)) {
+        cout << "Ошибка ввода. Пожалуйста, введите целое число.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    for (int i = 0; i < numIngredients; ++i) {
+        DetailedIngredient ingredient;
+        cout << "Ингредиент " << (i + 1) << ":\n";
+        ingredient.input();
+        addIngredient(ingredient);
+    }
+}
+
+
+void Meal::addDish(const Dish& dish) {
+    dishes.push_back(dish);
+}
+
+double Meal::calculateCalories() const {
+    double total_cal = 0;
+    for (const auto& dish : dishes) {
+        total_cal += dish.calculateCalories();
+    }
+    return total_cal;
+}
+
+void Meal::input() {
+    cout << "Введите название приема пищи: ";
+    cin >> name;
+    int numDishes;
+    cout << "Введите количество блюд на этом приеме пищи: ";
+    while (!(cin >> numDishes)) {
+        cout << "Ошибка ввода. Пожалуйста, введите целое число.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    for (int i = 0; i < numDishes; ++i) {
+        Dish dish;
+        cout << "Блюдо " << (i + 1) << ":\n";
+        dish.input();
+        addDish(dish);
+    }
+}
+
+void Menu::addMeal(const Meal& meal) {
+    meals.push_back(meal);
+}
+
+double Menu::calculateCalories() const {
+    double total_cal = 0;
+    for (const auto& meal : meals) {
+        total_cal += meal.calculateCalories();
+    }
+    return total_cal;
+}
+
+
+void Menu::input() {
+    int numMeals;
+    cout << "Введите количество приемов пищи в меню: ";
+    while (!(cin >> numMeals)) {
+        cout << "Ошибка ввода. Пожалуйста, введите целое число.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    for (int i = 0; i < numMeals; ++i) {
+        Meal meal;
+        cout << "Прием пищи " << (i + 1) << ":\n";
+        meal.input();
+        addMeal(meal);
+    }
+}
