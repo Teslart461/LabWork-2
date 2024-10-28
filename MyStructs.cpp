@@ -121,3 +121,17 @@ void Menu::input() {
         addMeal(meal);
     }
 }
+
+void User::input() {
+    cout << "Введите имя пользователя: ";
+    cin >> name;
+}
+
+void PhysicalActivity::input() {
+    cout << "Введите количество сожженных калорий за физическую активность: ";
+    while (!(cin >> calories_burned)) {
+        cout << "Ошибка ввода. Пожалуйста, введите число.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+}
