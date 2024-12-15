@@ -88,6 +88,8 @@ void Dish::input() {
     }
 }
 
+Meal::Meal() : name("") {}
+Meal::~Meal() {}
 
 void Meal::addDish(const Dish& dish) {
     dishes.push_back(dish);
@@ -119,9 +121,12 @@ void Meal::input() {
     }
 }
 
-void Menu::addMeal(const Meal& meal) {
-    meals.push_back(meal);
-}
+Menu::Menu() { menuCount++; }
+Menu::~Menu() { menuCount--; }
+
+int Menu::getMenuCount() { return menuCount; }
+
+void Menu::addMeal(const Meal& meal) { meals.push_back(meal); }
 
 double Menu::calculateCalories() const {
     double total_cal = 0;
@@ -131,7 +136,6 @@ double Menu::calculateCalories() const {
     return total_cal;
 }
 
-
 void Menu::input() {
     int numMeals;
     cout << "Введите количество приемов пищи в меню: ";
@@ -140,18 +144,36 @@ void Menu::input() {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
-    for (int i = 0; i < numMeals; ++i) {
-        Meal meal;
-        cout << "Прием пищи " << (i + 1) << ":\n";
-        meal.input();
-        addMeal(meal);
+
+    try {
+        if (numMeals < 0) throw invalid_argument("Количество приемов пищи не может быть отрицательным.");
+
+        for (int i = 0; i < numMeals; ++i) {
+            Meal meal;
+            cout << "Прием пищи " << (i + 1) << ":\n";
+            meal.input();
+            addMeal(meal);
+        }
+    }
+    catch (const exception& e) {
+        cerr << "Ошибка: " << e.what() << endl;
     }
 }
+
+User::User() : name("") {}
+User::~User() {}
+
+string User::getName() const { return name; }
 
 void User::input() {
     cout << "Введите имя пользователя: ";
     cin >> name;
 }
+
+PhysicalActivity::PhysicalActivity() : calories_burned(0) {}
+PhysicalActivity::~PhysicalActivity() {}
+
+double PhysicalActivity::getCaloriesBurned() const { return calories_burned; }
 
 void PhysicalActivity::input() {
     cout << "Введите количество сожженных калорий за физическую активность: ";
