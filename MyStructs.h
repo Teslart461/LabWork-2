@@ -59,20 +59,12 @@ public:
 class Dish {
 private:
     string name;
-    vector<DetailedIngredient> ingredients; // Создание контейнера, для хранения объектов типа DetailedIngredient
+    vector<DetailedIngredient> ingredients;
 
 public:
-    Dish() {
-        name = "";
-    }
-
-    ~Dish() {
-
-    }
-
-    string getName() const {
-        return name;
-    }
+    Dish();
+    Dish(const Dish& other);
+    Dish& operator=(const Dish& other);
 
     void addIngredient(const DetailedIngredient& ingredient);
     double calculateCalories() const;
