@@ -40,6 +40,22 @@ int main() {
 
     dish3 = dish1;  // Оператор присваивания
     cout << "Калорийность блюда dish3 (после присваивания dish1): " << dish3.calculateCalories() << endl;
+
+    // Пример работы с DetailedIngredient и дружественной функцией
+    DetailedIngredient detailedIngredient;
+    cout << "Введите данные для детального ингредиента:\n";
+    detailedIngredient.input();
+    cout << "Проверка дружественной функции для DetailedIngredient: " << detailedIngredient << endl;
+    
+    // Исключение: вводим некорректные данные для проверки обработки
+    try {
+        cout << "Пример исключения:\n";
+        Menu invalidMenu;
+        invalidMenu.input();  // Введите отрицательное число для проверки
+    }
+    catch (const exception& e) {
+        cerr << "Обнаружено исключение: " << e.what() << endl;
+    }
     
     return 0;
 }
