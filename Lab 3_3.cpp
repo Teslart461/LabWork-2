@@ -16,7 +16,10 @@ using namespace std;
         user.input();
         cout << "Привет, " << user.getName() << "!\n";
 
-        
+        Menu menu;
+        menu.input();
+
+        cout << "Текущее количество меню: " << Menu::getMenuCount() << endl;
 
         return 0;
     }
