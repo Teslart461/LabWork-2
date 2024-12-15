@@ -78,37 +78,25 @@ private:
     vector<Dish> dishes;
 
 public:
-    Meal() {
-        name = "";
-    }
-
-    ~Meal() {
-
-    }
-
-    string getName() const {
-        return name;
-    }
+    Meal();
+    ~Meal();
 
     void addDish(const Dish& dish);
     double calculateCalories() const;
     void input();
 };
 
-// Класс для меню        
+// Класс для меню
 class Menu {
 private:
     vector<Meal> meals;
+    static int menuCount;
 
 public:
-    Menu() {
+    Menu();
+    ~Menu();
 
-    }
-
-    ~Menu() {
-
-    }
-
+    static int getMenuCount();
     void addMeal(const Meal& meal);
     double calculateCalories() const;
     void input();
@@ -120,18 +108,10 @@ private:
     string name;
 
 public:
-    User() {
-        name = "";
-    }
+    User();
+    ~User();
 
-    ~User() {
-
-    }
-
-    string getName() const {
-        return name;
-    }
-
+    string getName() const;
     void input();
 };
 
@@ -141,18 +121,10 @@ private:
     double calories_burned;
 
 public:
-    PhysicalActivity() {
-        calories_burned = 0;
-    }
+    PhysicalActivity();
+    ~PhysicalActivity();
 
-    ~PhysicalActivity() {
-
-    }
-
-    double getCaloriesBurned() const {
-        return calories_burned;
-    }
-
+    double getCaloriesBurned() const;
     void input();
 };
 
