@@ -3,6 +3,11 @@
 
 using namespace std;
 
+Ingredient::Ingredient() : name(""), cal_per_100g(0), weight_in_grams(0) {}
+Ingredient::~Ingredient() {}
+
+string Ingredient::getName() const { return name; }
+
 double Ingredient::calculateCalories() const {
     return (cal_per_100g * weight_in_grams) / 100.0;
 }
@@ -24,12 +29,23 @@ void Ingredient::input() {
     }
 }
 
-double DetailedIngredient::calculateCalories() const {
-    return ingredient.calculateCalories();
+ostream& operator<<(ostream& os, const Ingredient& ingredient) {
+    os << "Ингредиент: " << ingredient.getName() << " (калорийность: " << ingredient.calculateCalories() << " ккал)";
+    return os;
 }
 
-void DetailedIngredient::input() {
-    ingredient.input();
+DetailedIngredient::DetailedIngredient() : ingredient(), nutrition() {}
+DetailedIngredient::~DetailedIngredient() {}
+
+string DetailedIngredient::getName() const { return ingredient.getName(); }
+
+double DetailedIngredient::calculateCalories() const { return ingredient.calculateCalories(); }
+
+void DetailedIngredient::input() { ingredient.input(); }
+
+ostream& operator<<(ostream& os, const DetailedIngredient& di) {
+    os << di.ingredient;
+    return os;
 }
 
 void Dish::addIngredient(const DetailedIngredient& ingredient) {
