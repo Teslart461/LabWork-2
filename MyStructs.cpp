@@ -48,6 +48,16 @@ ostream& operator<<(ostream& os, const DetailedIngredient& di) {
     return os;
 }
 
+Dish::Dish() : name("") {}
+Dish::Dish(const Dish& other) : name(other.name), ingredients(other.ingredients) {}
+
+Dish& Dish::operator=(const Dish& other) {
+    if (this == &other) return *this;
+    name = other.name;
+    ingredients = other.ingredients;
+    return *this;
+}
+
 void Dish::addIngredient(const DetailedIngredient& ingredient) {
     ingredients.push_back(ingredient);
 }
