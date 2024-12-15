@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// Класс для представления ингредиента
+/ Класс для представления ингредиента
 class Ingredient {
 private:
     string name;
@@ -15,22 +15,14 @@ private:
     double weight_in_grams;
 
 public:
-    Ingredient() {
-        name = "";
-        cal_per_100g = 0;
-        weight_in_grams = 0;
-    }
+    Ingredient();
+    ~Ingredient();
 
-    ~Ingredient() {
-    
-    }
-
-    string getName() const {
-        return name;
-    }
-
+    string getName() const;
     double calculateCalories() const;
     void input();
+
+    friend ostream& operator<<(ostream& os, const Ingredient& ingredient);
 };
 
 // Класс для представления пищевой ценности    
@@ -42,16 +34,8 @@ private:
     double fiber;
 
 public:
-    NutritionFacts() {
-        proteins = 0;
-        fats = 0;
-        carbs = 0;
-        fiber = 0;
-    }
-
-    ~NutritionFacts() {
-
-    }
+    NutritionFacts() : proteins(0), fats(0), carbs(0), fiber(0) {}
+    ~NutritionFacts() {}
 };
 
 // Класс, используемый для ингредиентов в случае, если необходима пищевая ценность этого продукта   
@@ -61,18 +45,14 @@ private:
     NutritionFacts nutrition;
 
 public:
-    DetailedIngredient() : ingredient(), nutrition() {}
+    DetailedIngredient();
+    ~DetailedIngredient();
 
-    ~DetailedIngredient() {
-
-    }
-
-    string getName() const {
-        return ingredient.getName();
-    }
-
+    string getName() const;
     double calculateCalories() const;
     void input();
+
+    friend ostream& operator<<(ostream& os, const DetailedIngredient& di);
 };
 
 // Класс для представления блюда     
