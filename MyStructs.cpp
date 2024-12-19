@@ -42,24 +42,18 @@ void DetailedIngredient::input() {
     ingredient.input();
 }
 
+// Реализация методов Dish
 Dish::Dish() : name("") {}
-Dish::Dish(const Dish& other) : name(other.name), ingredients(other.ingredients) {}
+Dish::~Dish() {}
 
-Dish& Dish::operator=(const Dish& other) {
-    if (this == &other) return *this;
-    name = other.name;
-    ingredients = other.ingredients;
-    return *this;
-}
-
-void Dish::addIngredient(const DetailedIngredient& ingredient) {
+void Dish::addIngredient(const shared_ptr<FoodItem>& ingredient) {
     ingredients.push_back(ingredient);
 }
 
 double Dish::calculateCalories() const {
     double total_cal = 0;
     for (const auto& ingredient : ingredients) {
-        total_cal += ingredient.calculateCalories();
+        total_cal += ingredient->calculateCalories();
     }
     return total_cal;
 }
@@ -68,19 +62,20 @@ void Dish::input() {
     cout << "Введите название блюда: ";
     cin >> name;
     int numIngredients;
-    cout << "Введите количество ингредиентов в блюде: ";
+    cout << "Введите количество ингредиентов: ";
     while (!(cin >> numIngredients)) {
         cout << "Ошибка ввода. Пожалуйста, введите целое число.\n";
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     for (int i = 0; i < numIngredients; ++i) {
-        DetailedIngredient ingredient;
-        cout << "Ингредиент " << (i + 1) << ":\n";
-        ingredient.input();
+        shared_ptr<FoodItem> ingredient = make_shared<Ingredient>();
+        ingredient->input();
         addIngredient(ingredient);
     }
 }
+
+string Dish::getName() const {return name;}
 
 Meal::Meal() : name("") {}
 Meal::~Meal() {}
@@ -114,6 +109,8 @@ void Meal::input() {
         addDish(dish);
     }
 }
+
+string Meal::getName() const {return name;}
 
 Menu::Menu() { menuCount++; }
 Menu::~Menu() { menuCount--; }
