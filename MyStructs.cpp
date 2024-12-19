@@ -112,12 +112,12 @@ void Meal::input() {
 
 string Meal::getName() const {return name;}
 
-Menu::Menu() { menuCount++; }
-Menu::~Menu() { menuCount--; }
+Menu::Menu() {}
+Menu::~Menu() {}
 
-int Menu::getMenuCount() { return menuCount; }
-
-void Menu::addMeal(const Meal& meal) { meals.push_back(meal); }
+void Menu::addMeal(const Meal& meal) {
+    meals.push_back(meal);
+}
 
 double Menu::calculateCalories() const {
     double total_cal = 0;
@@ -127,6 +127,7 @@ double Menu::calculateCalories() const {
     return total_cal;
 }
 
+
 void Menu::input() {
     int numMeals;
     cout << "Введите количество приемов пищи в меню: ";
@@ -135,19 +136,30 @@ void Menu::input() {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
-
-    try {
-        if (numMeals < 0) throw invalid_argument("Количество приемов пищи не может быть отрицательным.");
-
-        for (int i = 0; i < numMeals; ++i) {
-            Meal meal;
-            cout << "Прием пищи " << (i + 1) << ":\n";
-            meal.input();
-            addMeal(meal);
-        }
+    for (int i = 0; i < numMeals; ++i) {
+        Meal meal;
+        cout << "Прием пищи " << (i + 1) << ":\n";
+        meal.input();
+        addMeal(meal);
     }
-    catch (const exception& e) {
-        cerr << "Ошибка: " << e.what() << endl;
+}
+
+void Menu::sortMealsByCalories() {
+    sort(meals.begin(), meals.end(), [](const Meal& a, const Meal& b) {
+        return a.calculateCalories() < b.calculateCalories();
+        });
+}
+
+const Meal* Menu::findMealByName(const string& name) const {
+    auto it = find_if(meals.begin(), meals.end(), [&name](const Meal& meal) {
+        return meal.getName() == name;
+        });
+    return it != meals.end() ? &(*it) : nullptr;
+}
+
+void Menu::print() const {
+    for (const auto& meal : meals) {
+        cout << meal.getName() << " (калорийность: " << meal.calculateCalories() << " ккал)\n";
     }
 }
 
