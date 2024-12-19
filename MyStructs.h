@@ -50,16 +50,16 @@ public:
 class Dish {
 private:
     string name;
-    vector<DetailedIngredient> ingredients;
+    vector<shared_ptr<FoodItem>> ingredients;
 
 public:
     Dish();
-    Dish(const Dish& other);
-    Dish& operator=(const Dish& other);
+    ~Dish();
 
-    void addIngredient(const DetailedIngredient& ingredient);
+    void addIngredient(const shared_ptr<FoodItem>& ingredient);
     double calculateCalories() const;
     void input();
+    string getName() const;
 };
 
 // Класс для приёма пищи (завтрак, обед, ужин и т.д.)           
@@ -75,22 +75,24 @@ public:
     void addDish(const Dish& dish);
     double calculateCalories() const;
     void input();
+    string getName() const;
 };
 
 // Класс для меню
 class Menu {
 private:
     vector<Meal> meals;
-    static int menuCount;
 
 public:
     Menu();
     ~Menu();
 
-    static int getMenuCount();
     void addMeal(const Meal& meal);
     double calculateCalories() const;
     void input();
+    void sortMealsByCalories();
+    const Meal* findMealByName(const string& name) const;
+    void print() const;
 };
 
 // Класс для представления пользователя               
