@@ -1,16 +1,16 @@
 #include "MyStructs.h"
-#include <limits>
+#include <algorithm> // Для std::sort и std::find_if
+#include <iostream>
+#include <string>
+#include <vector>
+#include <memory>
 
-using namespace std;
-
-Ingredient::Ingredient() : name(""), cal_per_100g(0), weight_in_grams(0) {}
-Ingredient::~Ingredient() {}
-
-string Ingredient::getName() const { return name; }
-
+// Реализация методов Ingredient
 double Ingredient::calculateCalories() const {
     return (cal_per_100g * weight_in_grams) / 100.0;
 }
+
+string Ingredient::getName() const {return name;}
 
 void Ingredient::input() {
     cout << "Введите название ингредиента: ";
@@ -29,23 +29,17 @@ void Ingredient::input() {
     }
 }
 
-ostream& operator<<(ostream& os, const Ingredient& ingredient) {
-    os << "Ингредиент: " << ingredient.getName() << " (калорийность: " << ingredient.calculateCalories() << " ккал)";
-    return os;
+// Реализация методов DetailedIngredient
+double DetailedIngredient::calculateCalories() const {
+    return ingredient.calculateCalories();
 }
 
-DetailedIngredient::DetailedIngredient() : ingredient(), nutrition() {}
-DetailedIngredient::~DetailedIngredient() {}
+string DetailedIngredient::getName() const {
+    return ingredient.getName();
+}
 
-string DetailedIngredient::getName() const { return ingredient.getName(); }
-
-double DetailedIngredient::calculateCalories() const { return ingredient.calculateCalories(); }
-
-void DetailedIngredient::input() { ingredient.input(); }
-
-ostream& operator<<(ostream& os, const DetailedIngredient& di) {
-    os << di.ingredient;
-    return os;
+void DetailedIngredient::input() {
+    ingredient.input();
 }
 
 Dish::Dish() : name("") {}
