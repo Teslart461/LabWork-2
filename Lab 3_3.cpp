@@ -19,6 +19,24 @@ int main() {
     Menu menu;
     cout << "Создание меню:\n";
     menu.input();
+
+    // Сортировка меню по калориям
+    menu.sortMealsByCalories();
+    cout << "\nМеню после сортировки приемов пищи по калорийности:\n";
+    menu.print();
+    
+    // Поиск приема пищи по имени
+    string searchName;
+    cout << "\nВведите название приема пищи для поиска: ";
+    cin >> searchName;
+    const Meal* foundMeal = menu.findMealByName(searchName);
+    if (foundMeal) {
+        cout << "Прием пищи найден: " << foundMeal->getName() << "\n";
+        cout << "Калорийность приема пищи: " << foundMeal->calculateCalories() << " ккал\n";
+    }
+    else {
+        cout << "Прием пищи не найден.\n";
+    }
     
     double totalCalories = menu.calculateCalories();
     cout << "Общее количество калорий в меню: " << totalCalories << " ккал\n";
