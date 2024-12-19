@@ -7,7 +7,16 @@
 
 using namespace std;
 
-/ Класс для представления ингредиента
+// Базовый класс для всех пищевых элементов
+class FoodItem {
+public:
+    virtual ~FoodItem() = default;
+    virtual double calculateCalories() const = 0;
+    virtual string getName() const = 0;
+    virtual void input() = 0;
+};
+
+// Класс для представления ингредиента
 class Ingredient {
 private:
     string name;
