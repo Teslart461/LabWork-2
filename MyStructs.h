@@ -16,52 +16,34 @@ public:
     virtual void input() = 0;
 };
 
-// Класс для представления ингредиента
-class Ingredient {
+// Производный класс Ingredient
+class Ingredient : public FoodItem {
 private:
     string name;
     double cal_per_100g;
     double weight_in_grams;
 
 public:
-    Ingredient();
-    ~Ingredient();
+    Ingredient() : name(""), cal_per_100g(0), weight_in_grams(0) {}
+    ~Ingredient() override {}
 
-    string getName() const;
-    double calculateCalories() const;
-    void input();
-
-    friend ostream& operator<<(ostream& os, const Ingredient& ingredient);
+    double calculateCalories() const override;
+    string getName() const override;
+    void input() override;
 };
 
-// Класс для представления пищевой ценности    
-class NutritionFacts {
-private:
-    double proteins;
-    double fats;
-    double carbs;
-    double fiber;
-
-public:
-    NutritionFacts() : proteins(0), fats(0), carbs(0), fiber(0) {}
-    ~NutritionFacts() {}
-};
-
-// Класс, используемый для ингредиентов в случае, если необходима пищевая ценность этого продукта   
-class DetailedIngredient {
+// Производный класс DetailedIngredient
+class DetailedIngredient : public FoodItem {
 private:
     Ingredient ingredient;
-    NutritionFacts nutrition;
 
 public:
-    DetailedIngredient();
-    ~DetailedIngredient();
+    DetailedIngredient() : ingredient() {}
+    ~DetailedIngredient() override {}
 
-    string getName() const;
-    double calculateCalories() const;
-    void input();
-
-    friend ostream& operator<<(ostream& os, const DetailedIngredient& di);
+    double calculateCalories() const override;
+    string getName() const override;
+    void input() override;
 };
 
 // Класс для представления блюда     
